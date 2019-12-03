@@ -135,7 +135,7 @@ const startGame = () => {
   gameBoard.style.display = "block";
   infoBox.innerHTML = `
     Welcome ${state.name}. 
-    You are playing as ${state.player} <br /> 
+    You are playing as <strong>${state.player}</strong> <br /> 
     You are hosting game: ${state.room.split("-")[1]}`;
   renderBoard(state.board);
 };
@@ -146,7 +146,7 @@ const joinGame = () => {
   gameBoard.style.display = "block";
   infoBox.innerHTML = `
     Welcome ${state.name}. 
-    You are playing as ${state.player} <br /> 
+    You are playing as <strong>${state.player}</strong> <br /> 
     You have joined game: ${state.room.split("-")[1]}`;
   renderBoard(state.board);
 };
@@ -154,7 +154,7 @@ const joinGame = () => {
 const gameOver = () => {
   renderBoard(state.board);
   gameplayDisplay(`Game over: ${state.winner} wins!`);
-  resetBtn.style.display = "block";
+  resetBtn.style.display = "inline";
 };
 
 // Socket Events
@@ -210,5 +210,5 @@ socket.on("err", data => {
 
 socket.on("itsaDraw", data => {
   gameplayDisplay("Draw! Everyone's a loser!");
-  resetBtn.style.display = "block";
+  resetBtn.style.display = "inline";
 });

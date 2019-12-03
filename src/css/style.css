@@ -31,6 +31,12 @@
   display: none;
 }
 
+#reset {
+  width: 100%;
+  margin-top: 50px;
+  text-align: center;
+}
+
 h1,
 h2,
 h3 {
