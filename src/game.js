@@ -18,7 +18,8 @@ const state = {
   turn: "X",
   room: null,
   gameOver: false,
-  winner: null
+  winner: null,
+  opponent: false
 };
 
 const checkWinner = board => {
@@ -47,7 +48,9 @@ const checkWinner = board => {
 
 const renderBoard = board => {
   displayErrors([]);
-  gameplayDisplay(`Player ${state.turn}'s turn.`);
+  state.opponent
+    ? gameplayDisplay(`Player ${state.turn}'s turn.`)
+    : gameplayDisplay(`Waiting for opponent...`);
   gameBoard.innerText = "";
   board.map((square, index) => {
     gameBoard.appendChild(renderSquare(square, index));
@@ -95,6 +98,7 @@ const clickSquare = (square, index) => {
   if (square.innerText) return;
   if (state.gameOver) return;
   if (state.player !== state.turn) return;
+  if (!state.opponent) return;
 
   state.board[index] = state.player;
   state.turn = state.turn === "X" ? "O" : "X";
@@ -128,7 +132,6 @@ const startGame = () => {
     Welcome ${state.name}. 
     You are playing as ${state.player} <br /> 
     You are hosting game: ${state.room.split("-")[1]}`;
-  opponentInfo.innerText = "Waiting for opponent to join...";
   renderBoard(state.board);
 };
 
@@ -175,10 +178,13 @@ socket.on("newGameStarted", data => {
 });
 
 socket.on("player1", data => {
+  state.opponent = true;
+  renderBoard(state.board);
   opponentInfo.innerText = `${data.name} has joined the game.`;
 });
 
 socket.on("player2", data => {
+  state.opponent = true;
   state.name = data.name;
   state.room = data.room;
   state.player = "O";
@@ -186,7 +192,6 @@ socket.on("player2", data => {
 });
 
 socket.on("turnPlayed", data => {
-  console.log(data);
   state.board[data.position] = data.player;
   state.turn = data.player === "X" ? "O" : "X";
   renderBoard(state.board);
