@@ -49,6 +49,10 @@ io.on("connection", socket => {
   socket.on("resetGame", data => {
     io.in(data.room).emit("newGameStarted", {});
   });
+
+  socket.on("draw", data => {
+    io.in(data.room).emit("itsaDraw", {});
+  });
 });
 
 http.listen(port, console.log("Listening on port " + port));

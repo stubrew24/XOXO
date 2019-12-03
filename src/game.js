@@ -19,7 +19,8 @@ const state = {
   room: null,
   gameOver: false,
   winner: null,
-  opponent: false
+  opponent: false,
+  moves: 0
 };
 
 const checkWinner = board => {
@@ -100,6 +101,8 @@ const clickSquare = (square, index) => {
   if (state.player !== state.turn) return;
   if (!state.opponent) return;
 
+  state.moves++;
+
   state.board[index] = state.player;
   state.turn = state.turn === "X" ? "O" : "X";
   renderBoard(state.board);
@@ -110,6 +113,8 @@ const clickSquare = (square, index) => {
       player: state.player,
       room: state.room
     });
+
+  if (state.moves === 9) return socket.emit("draw", { room: state.room });
 
   return socket.emit("playTurn", {
     position: index,
@@ -169,7 +174,8 @@ socket.on("gameEnd", data => {
 });
 
 socket.on("newGameStarted", data => {
-  state.turn = state.winner;
+  state.moves = 0;
+  state.turn = state.winner || "X";
   state.board = [...emptyBoard];
   state.gameOver = false;
   state.winner = null;
@@ -192,6 +198,7 @@ socket.on("player2", data => {
 });
 
 socket.on("turnPlayed", data => {
+  state.moves++;
   state.board[data.position] = data.player;
   state.turn = data.player === "X" ? "O" : "X";
   renderBoard(state.board);
@@ -199,4 +206,9 @@ socket.on("turnPlayed", data => {
 
 socket.on("err", data => {
   displayErrors([data.message]);
+});
+
+socket.on("itsaDraw", data => {
+  gameplayDisplay("Draw! Everyone's a loser!");
+  resetBtn.style.display = "block";
 });
