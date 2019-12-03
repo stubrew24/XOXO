@@ -41,7 +41,7 @@ h1,
 h2,
 h3 {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 #displays {
@@ -56,6 +56,7 @@ h3 {
   width: 100%;
   margin: auto;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 form {
