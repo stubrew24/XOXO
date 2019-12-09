@@ -6,10 +6,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static("src"));
 
-app.use((req, res, next) => {
-  if (req.secure) {
-    next();
-  } else {
+app.use((req, res) => {
+  if (!req.secure) {
     res.redirect("https://" + req.headers.host + req.url);
   }
 });
