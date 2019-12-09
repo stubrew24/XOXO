@@ -11,8 +11,9 @@ app.use((req, res, next) => {
 
   if (schema === "https") {
     req.connection.encrypted = true;
+  } else {
+    res.redirect("https://" + req.headers.host + req.url);
   }
-
   next();
 });
 
