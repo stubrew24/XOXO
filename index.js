@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 
 app.use(express.static("src"));
 
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/src/index.html");
 });
 
 app.get("/", (req, res) => {

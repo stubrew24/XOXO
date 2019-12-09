@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="./css/skeleton.css" />
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="manifest" href="./manifest.json" />
 
     <link rel="icon" type="image/png" href="./images/icon.png" />
 
@@ -74,12 +75,17 @@
       <div id="reset">
         <button id="resetBtn">New Game</button>
       </div>
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="./game.js"></script>
       <div id="footer">
         Made by
         <a href="https://stuartsewell.dev" target="_blank">Stuart Sewell</a>
       </div>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="./game.js"></script>
+      <script>
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.register("./serviceworker.js");
+        }
+      </script>
     </div>
   </body>
 </html>
