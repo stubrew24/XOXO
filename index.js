@@ -6,6 +6,12 @@ const port = process.env.PORT || 3003;
 
 app.use(express.static("src"));
 
+app.get("*", (req, res, next) => {
+  if (req.headers["x-forwarded-proto"] != "https")
+    res.redirect("https://stubrew24-xoxo.herokuapp.com/" + req.url);
+  next();
+});
+
 app.use((req, res, next) => {
   var schema = req.headers["x-forwarded-proto"];
 
