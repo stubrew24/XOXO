@@ -5,9 +5,8 @@ const io = require("socket.io")(http);
 const port = process.env.PORT || 3003;
 var enforce = require("express-sslify");
 
-app.use(express.static("src"));
-
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(express.static("src"));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
