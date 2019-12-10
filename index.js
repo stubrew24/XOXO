@@ -7,7 +7,7 @@ var enforce = require("express-sslify");
 
 app.use(express.static("src"));
 
-app.use(enforce.HTTPS());
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
