@@ -12,16 +12,16 @@ app.get("*", (req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  var schema = req.headers["x-forwarded-proto"];
+// app.use((req, res, next) => {
+//   var schema = req.headers["x-forwarded-proto"];
 
-  if (schema === "https") {
-    req.connection.encrypted = true;
-  } else {
-    res.redirect("https://" + req.headers.host + req.url);
-  }
-  next();
-});
+//   if (schema === "https") {
+//     req.connection.encrypted = true;
+//   } else {
+//     res.redirect("https://" + req.headers.host + req.url);
+//   }
+//   next();
+// });
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
