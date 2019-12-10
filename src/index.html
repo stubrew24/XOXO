@@ -75,17 +75,18 @@
       <div id="reset">
         <button id="resetBtn">New Game</button>
       </div>
-      <div id="footer">
-        Made by
-        <a href="https://stuartsewell.dev" target="_blank">Stuart Sewell</a>
-      </div>
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="./game.js"></script>
-      <script>
-        if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("./serviceworker.js");
-        }
-      </script>
     </div>
+    <!-- <div id="footer"> -->
+    <a href="https://stuartsewell.dev" target="_blank"
+      ><img src="./images/ssdev.png" alt="ssdev logo" class="sslogo"
+    /></a>
+    <!-- </div> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./game.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./serviceworker.js");
+      }
+    </script>
   </body>
 </html>
