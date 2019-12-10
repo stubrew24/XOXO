@@ -3,25 +3,11 @@ const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const port = process.env.PORT || 3003;
+var enforce = require("express-sslify");
 
 app.use(express.static("src"));
 
-app.get("*", (req, res, next) => {
-  if (req.headers["x-forwarded-proto"] != "https")
-    res.redirect("https://stubrew24-xoxo.herokuapp.com/" + req.url);
-  next();
-});
-
-// app.use((req, res, next) => {
-//   var schema = req.headers["x-forwarded-proto"];
-
-//   if (schema === "https") {
-//     req.connection.encrypted = true;
-//   } else {
-//     res.redirect("https://" + req.headers.host + req.url);
-//   }
-//   next();
-// });
+app.use(enforce.HTTPS());
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
